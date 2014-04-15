@@ -5,12 +5,12 @@
     <target name="load-props">
         <loadproperties srcfile="cfg/build.properties" />
     </target>
-    
+
     <target name="init" depends="load-props">
         <mkdir dir="${class.dir}" />
         <mkdir dir="${installer.staging}"/>
     </target>
-    
+
     <target name="resolve-classpath" depends="init">
         <!-- these will be packaged in fat-jar !-->
         <fileset id="libs.classpath.fileset" dir="${lib.dir}">
@@ -22,14 +22,14 @@
             <fileset refid="libs.classpath.fileset" />
         </path>
 
-        <property name="jar.name" value="${project.name}-${full.version}.jar"/>        
+        <property name="jar.name" value="${project.name}-${full.version}.jar"/>
     </target>
 
     <!-- compile -->
     <target name="compile" depends="resolve-classpath">
         <!-- compile -->
         <javac includeantruntime="false" srcdir="${src.dir}" destdir="${class.dir}"
-            debug="true" debuglevel="lines,vars,source" fork="true">
+               debug="true" debuglevel="lines,vars,source" fork="true">
             <compilerarg line="-J-Xmx4g" />
             <classpath refid="lib.classpath" />
             <classpath>
@@ -46,11 +46,11 @@
             </fileset>
         </copy>
     </target>
-                
+
     <!-- test-compile -->
     <target name="test-compile" depends="resolve-classpath">
         <javac includeantruntime="false" srcdir="${test.dir}" destdir="${class.dir}"
-            debug="true" debuglevel="lines,vars,source" fork="true">
+               debug="true" debuglevel="lines,vars,source" fork="true">
             <compilerarg line="-J-Xmx4g" />
             <classpath refid="lib.classpath" />
             <classpath>
@@ -66,7 +66,7 @@
             </fileset>
         </copy>
     </target>
-    
+
     <!-- tests go here -->
     <target name="test" depends="compile, test-compile">
         <java classname="${test.mainclass}" fork="true" failonerror="true">
@@ -93,50 +93,51 @@
             </manifest>
         </jar>
     </target>
-	
-	<target name="java-version-check">
-	    <fail message="Java version: ${ant.java.version}, required at most 1.6.">
-	    	<condition>
-	    	  <not>
-	    	    <or>
-	    	      <equals arg1="${ant.java.version}" arg2="1.6" />
-	    	      <equals arg1="${ant.java.version}" arg2="1.5" />
-	    	    </or>
-	    	  </not>
-	    	</condition>
-	    </fail>
-	</target>
-	
+
+    <target name="java-version-check">
+        <fail message="Java version: ${ant.java.version}, required at most 1.6.">
+            <condition>
+                <not>
+                    <or>
+                        <equals arg1="${ant.java.version}" arg2="1.7" />
+                        <equals arg1="${ant.java.version}" arg2="1.6" />
+                        <equals arg1="${ant.java.version}" arg2="1.5" />
+                    </or>
+                </not>
+            </condition>
+        </fail>
+    </target>
+
     <target name="build" depends="java-version-check, jar, copy-jars, copy-readme, copy-legal, write-binaries, create-zip"/>
-	
-	<target name="create-zip" depends="load-props">
-		<zip destfile="${project.name}-${full.version}.zip" basedir="${installer.staging}" />
-	</target>
-        
+
+    <target name="create-zip" depends="load-props">
+        <zip destfile="${project.name}-${full.version}.zip" basedir="${installer.staging}" />
+    </target>
+
     <target name="write-binaries" depends="load-props">
         <copy file="${basedir}/scripts/${binary_name}" tofile="${installer.staging}/bin/${binary_name}" />
         <chmod file="${installer.staging}/bin/${binary_name}" perm="+x"/>
         <copy file="${basedir}/scripts/${binary_name}.bat" tofile="${installer.staging}/bin/${binary_name}.bat" />
     </target>
-    
+
     <target name="copy-jars" depends="load-props">
         <copy todir="${basedir}/${installer.staging}/bin/dist" flatten="true">
             <fileset refid="libs.classpath.fileset" />
-        </copy>   
+        </copy>
     </target>
 
     <target name="copy-legal" depends="load-props">
         <copy todir="${basedir}/${installer.staging}/legal" flatten="false">
             <fileset dir="${legal.dir}" />
-        </copy>   
+        </copy>
     </target>
-    
+
     <target name="copy-readme" depends="load-props">
         <copy todir="${basedir}/${installer.staging}" flatten="true">
             <fileset file="${readme.file}" />
-        </copy>   
+        </copy>
     </target>
-    
+
     <!-- removes all that has been built -->
     <target name="clean" depends="load-props">
         <delete dir="${installer.staging}" includeEmptyDirs="true"/>
@@ -144,11 +145,11 @@
     </target>
 
     <!-- ========================= Ivy stuff ========================= -->
-    
+
     <target name="ivy-dir-check">
         <property name="ivy.jar.dir" value="ivy" />
         <condition property="ivy.dir.exists">
-          <available file="${ivy.jar.dir}" type="dir"/>
+            <available file="${ivy.jar.dir}" type="dir"/>
         </condition>
     </target>
 
@@ -163,21 +164,21 @@
         <taskdef resource="org/apache/ivy/ant/antlib.xml"
                  uri="antlib:org.apache.ivy.ant" classpathref="ivy.lib.path"/>
     </target>
-    
+
     <target name="deps" depends="ivy-init">
         <ivy:retrieve pattern="${lib.dir}/ivy/[type]/[artifact]-[revision].[ext]" sync="true"/>
         <ivy:report todir="${lib.dir}/ivy"/>
     </target>
-    
+
     <target name="clean-deps" depends="ivy-init">
         <delete includeemptydirs="true">
             <fileset dir="${lib.dir}/ivy" defaultexcludes="true"/>
         </delete>
     </target>
-    
+
     <target name="clean-ivy-cache" depends="ivy-init" description="--> clean the ivy cache">
         <ivy:cleancache />
     </target>
-    
+
 </project>
 

@@ -6,8 +6,8 @@
             <exclude name="commons-codec" />
         </dependency>
         <!-- download odftoolkit manually -->
-        <!-- dependency org="org.apache.odftoolkit"    name="simple-odf"            rev="0.8-incubating"             >
-        </dependency -->
+        <dependency org="org.apache.odftoolkit"    name="simple-odf"            rev="0.7-incubating"             >
+        </dependency>
         <dependency org="com.google.code.findbugs" name="jsr305"                rev="2.0.2"                      >
         </dependency>
     </dependencies>
