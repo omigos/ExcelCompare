@@ -147,27 +147,27 @@ public class SpreadSheetDiffer {
         ICellStyle s2 = c2.getCell().getCellStyle();
 
         try {
-            verifyStyle(s1.getLocked(), s2.getLocked());
-            verifyStyle(s1.getAlignment(), s2.getAlignment());
-            verifyStyle(s1.getBorderBottom(), s2.getBorderBottom());
-            verifyStyle(s1.getBorderLeft(), s2.getBorderLeft());
-            verifyStyle(s1.getBorderRight(), s2.getBorderRight());
-            verifyStyle(s1.getBorderTop(), s2.getBorderTop());
-            verifyStyle(s1.getWrapText(), s2.getWrapText());
-            verifyStyle(s1.getVerticalAlignment(), s2.getVerticalAlignment());
-            verifyStyle(s1.getTopBorderColor(), s2.getTopBorderColor());
-            verifyStyle(s1.getRotation(), s2.getRotation());
-            verifyStyle(s1.getRightBorderColor(), s2.getRightBorderColor());
-            verifyStyle(s1.getLeftBorderColor(), s2.getLeftBorderColor());
-            verifyStyle(s1.getIndention(), s2.getIndention());
-            verifyStyle(s1.getHidden(), s2.getHidden());
-            verifyStyle(s1.getFillPattern(), s2.getFillPattern());
-            verifyStyle(s1.getFillForegroundColorColor(), s2.getFillForegroundColorColor());
-            verifyStyle(s1.getFillForegroundColor(), s2.getFillForegroundColor());
-            verifyStyle(s1.getDataFormatString(), s2.getDataFormatString());
-            verifyStyle(s1.getBottomBorderColor(), s2.getBottomBorderColor());
-            verifyStyle(s1.getFillBackgroundColor(), s2.getFillBackgroundColor());
-            verifyStyle(s1.getFillBackgroundColorColor(), s2.getFillBackgroundColorColor());
+            verifyStyle(s1.getLocked(), s2.getLocked(), "locked");
+            verifyStyle(s1.getAlignment(), s2.getAlignment(), "alignment");
+            verifyStyle(s1.getBorderBottom(), s2.getBorderBottom(), "borderBottom");
+            verifyStyle(s1.getBorderLeft(), s2.getBorderLeft(), "borderLeft");
+            verifyStyle(s1.getBorderRight(), s2.getBorderRight(), "borderRight");
+            verifyStyle(s1.getBorderTop(), s2.getBorderTop(), "borderTop");
+            verifyStyle(s1.getWrapText(), s2.getWrapText(), "wrapText");
+            verifyStyle(s1.getVerticalAlignment(), s2.getVerticalAlignment(), "verticalAlignment");
+            verifyStyle(s1.getTopBorderColor(), s2.getTopBorderColor(), "topBorderColor");
+            verifyStyle(s1.getRotation(), s2.getRotation(), "rotation");
+            verifyStyle(s1.getRightBorderColor(), s2.getRightBorderColor(), "rightBorderColor");
+            verifyStyle(s1.getLeftBorderColor(), s2.getLeftBorderColor(), "leftBorderColor");
+            verifyStyle(s1.getIndention(), s2.getIndention(), "indention");
+            verifyStyle(s1.getHidden(), s2.getHidden(), "hidden");
+            verifyStyle(s1.getFillPattern(), s2.getFillPattern(), "fillPattern");
+            verifyStyle(s1.getFillForegroundColorColor(), s2.getFillForegroundColorColor(), "fillForegroundColorColor");
+            verifyStyle(s1.getFillForegroundColor(), s2.getFillForegroundColor(), "fillForegroundColor");
+            verifyStyle(s1.getDataFormatString(), s2.getDataFormatString(), "dataFormatString");
+            verifyStyle(s1.getBottomBorderColor(), s2.getBottomBorderColor(), "bottomBordercolor");
+            verifyStyle(s1.getFillBackgroundColor(), s2.getFillBackgroundColor(), "fillBackgroundColor");
+            verifyStyle(s1.getFillBackgroundColorColor(), s2.getFillBackgroundColorColor(), "fillBackgroundColorColor");
 
         } catch (IllegalStateException e) {
             throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ")");
@@ -189,25 +189,25 @@ public class SpreadSheetDiffer {
 
         try {
             if (f1 != null && f2 != null) {
-                verifyStyle(f1.getBoldweight(), f2.getBoldweight());
-                verifyStyle(f1.getColor(), f2.getColor());
-                verifyStyle(f1.getFontHeight(), f2.getFontHeight());
-                verifyStyle(f1.getFontName(), f2.getFontName());
+                verifyStyle(f1.getBoldweight(), f2.getBoldweight(), "bold");
+                verifyStyle(f1.getColor(), f2.getColor(), "color");
+                verifyStyle(f1.getFontHeight(), f2.getFontHeight(), "fontHeight");
+                verifyStyle(f1.getFontName(), f2.getFontName(), "fontName");
             }
         } catch (IllegalStateException e) {
             throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ")");
         }
     }
 
-    private static void verifyStyle(Object o1, Object o2) {
+    private static void verifyStyle(Object o1, Object o2, String description) {
         if (o1 == null && o2 == null)
             return;
 
         if (o1 == null || o2 == null) {
-            throw new IllegalStateException("Styles do not match: " + o1 + " != " + o2);
+            throw new IllegalStateException(description + " do not match: " + o1 + " != " + o2);
         }
         if (!o1.equals(o2)) {
-            throw new IllegalStateException("Styles do not match: " + o1 + " != " + o2);
+            throw new IllegalStateException(description + " do not match: " + o1 + " != " + o2);
         }
     }
 
