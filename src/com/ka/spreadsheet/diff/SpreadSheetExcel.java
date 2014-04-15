@@ -2,10 +2,7 @@ package com.ka.spreadsheet.diff;
 
 import java.util.Iterator;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 
 public class SpreadSheetExcel implements ISpreadSheet {
 
@@ -14,6 +11,10 @@ public class SpreadSheetExcel implements ISpreadSheet {
 	public SpreadSheetExcel(Workbook workbook) {
 		this.workbook = workbook;
 	}
+
+    public IFont getFont(short index) {
+        return new FontExcel(workbook.getFontAt(index));
+    }
 	
 	@Override
 	public Iterator<ISheet> getSheetIterator() {
@@ -139,7 +140,12 @@ class CellExcel implements ICell {
 		return cell.getColumnIndex();
 	}
 
-	@Override
+    @Override
+    public ICellStyle getCellStyle() {
+        return new CellStyleExcel(cell.getCellStyle());
+    }
+
+    @Override
 	public String getStringValue() {
 		int cellType = cell.getCellType();
 		switch (cellType) {
@@ -157,4 +163,150 @@ class CellExcel implements ICell {
 		}
 		return cell.getStringCellValue();
 	}
+}
+
+class CellStyleExcel implements ICellStyle {
+    private CellStyle cellStyle;
+
+    public CellStyleExcel(CellStyle cellStyle) {
+        this.cellStyle = cellStyle;
+    }
+
+    @Override
+    public int getAlignment() {
+        return cellStyle.getAlignment();
+    }
+
+    @Override
+    public short getBorderBottom() {
+        return cellStyle.getBorderBottom();
+    }
+
+    @Override
+    public short getBorderLeft() {
+
+        return cellStyle.getBorderLeft();
+    }
+
+    @Override
+    public short getBorderRight() {
+        return cellStyle.getBorderRight();
+    }
+
+    @Override
+    public short getBorderTop() {
+        return cellStyle.getBorderTop();
+    }
+
+    @Override
+    public short getBottomBorderColor() {
+        return cellStyle.getBottomBorderColor();
+    }
+
+    @Override
+    public short getLeftBorderColor() {
+        return cellStyle.getLeftBorderColor();
+    }
+
+    @Override
+    public short getTopBorderColor() {
+        return cellStyle.getTopBorderColor();
+    }
+
+    @Override
+    public short getRightBorderColor() {
+        return cellStyle.getRightBorderColor();
+    }
+
+    @Override
+    public String getDataFormatString() {
+        return cellStyle.getDataFormatString();
+    }
+
+    @Override
+    public short getFillBackgroundColor() {
+        return cellStyle.getFillBackgroundColor();
+    }
+
+    @Override
+    public Color getFillBackgroundColorColor() {
+        return cellStyle.getFillBackgroundColorColor();
+    }
+
+    @Override
+    public short getFillForegroundColor() {
+        return cellStyle.getFillForegroundColor();
+    }
+
+    @Override
+    public Color getFillForegroundColorColor() {
+        return cellStyle.getFillForegroundColorColor();
+    }
+
+    @Override
+    public short getFillPattern() {
+        return cellStyle.getFillPattern();
+    }
+
+    @Override
+    public boolean getHidden() {
+        return cellStyle.getHidden();
+    }
+
+    @Override
+    public short getIndention() {
+        return cellStyle.getIndention();
+    }
+
+    @Override
+    public short getVerticalAlignment() {
+        return cellStyle.getVerticalAlignment();
+    }
+
+    @Override
+    public boolean getWrapText() {
+        return cellStyle.getWrapText();
+    }
+
+    @Override
+    public short getRotation() {
+        return cellStyle.getRotation();
+    }
+
+    @Override
+    public boolean getLocked() {
+        return cellStyle.getLocked();
+    }
+
+    public short getFontIndex() {
+        return cellStyle.getFontIndex();
+    }
+}
+
+class FontExcel implements IFont {
+    private Font font;
+
+    public FontExcel(Font font) {
+        this.font = font;
+    }
+
+    @Override
+    public short getBoldweight() {
+        return font.getBoldweight();
+    }
+
+    @Override
+    public short getColor() {
+        return font.getColor();
+    }
+
+    @Override
+    public short getFontHeight() {
+        return font.getFontHeight();
+    }
+
+    @Override
+    public String getFontName() {
+        return font.getFontName();
+    }
 }

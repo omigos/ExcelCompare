@@ -100,6 +100,8 @@ public class SpreadSheetDiffer {
                     if (!c1.getStringValue().equals(c2.getStringValue())){
                         isDiff = true;
                         diffCallback.reportDiffCell(c1, c2);
+                    } else {
+                        styleCompare(c1, c2, ss1, ss2);
                     }
                     c1 = c2 = null;
                 }
@@ -139,7 +141,52 @@ public class SpreadSheetDiffer {
         
         return isDiff ? 1 : 0;
     }
-    
+
+    private static void styleCompare(CellPos c1, CellPos c2, ISpreadSheet ss1, ISpreadSheet ss2) {
+        ICellStyle s1 = c1.getCell().getCellStyle();
+        ICellStyle s2 = c2.getCell().getCellStyle();
+
+        try {
+            verifyStyle(s1.getLocked(), s2.getLocked());
+            verifyStyle(s1.getAlignment(), s2.getAlignment());
+            verifyStyle(s1.getBorderBottom(), s2.getBorderBottom());
+            verifyStyle(s1.getBorderLeft(), s2.getBorderLeft());
+            verifyStyle(s1.getBorderRight(), s2.getBorderRight());
+            verifyStyle(s1.getBorderTop(), s2.getBorderTop());
+            verifyStyle(s1.getWrapText(), s2.getWrapText());
+            verifyStyle(s1.getVerticalAlignment(), s2.getVerticalAlignment());
+            verifyStyle(s1.getTopBorderColor(), s2.getTopBorderColor());
+            verifyStyle(s1.getRotation(), s2.getRotation());
+            verifyStyle(s1.getRightBorderColor(), s2.getRightBorderColor());
+            verifyStyle(s1.getLeftBorderColor(), s2.getLeftBorderColor());
+            verifyStyle(s1.getIndention(), s2.getIndention());
+            verifyStyle(s1.getHidden(), s2.getHidden());
+            verifyStyle(s1.getFillPattern(), s2.getFillPattern());
+            verifyStyle(s1.getFillForegroundColorColor(), s2.getFillForegroundColorColor());
+            verifyStyle(s1.getFillForegroundColor(), s2.getFillForegroundColor());
+            verifyStyle(s1.getDataFormatString(), s2.getDataFormatString());
+            verifyStyle(s1.getBottomBorderColor(), s2.getBottomBorderColor());
+            verifyStyle(s1.getFillBackgroundColor(), s2.getFillBackgroundColor());
+            verifyStyle(s1.getFillBackgroundColorColor(), s2.getFillBackgroundColorColor());
+
+            IFont f1 = ss1.getFont(c1.getCell().getCellStyle().getFontIndex());
+            IFont f2 = ss2.getFont(c2.getCell().getCellStyle().getFontIndex());
+
+            verifyStyle(f1.getBoldweight(), f2.getBoldweight());
+            verifyStyle(f1.getColor(), f2.getColor());
+            verifyStyle(f1.getFontHeight(), f2.getFontHeight());
+            verifyStyle(f1.getFontName(), f2.getFontName());
+        } catch (Exception e) {
+            throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition());
+        }
+    }
+
+    private static void verifyStyle(Object o1, Object o2) {
+        if (!o1.equals(o2)) {
+            throw new IllegalStateException("Styles do not match: " + o1 + " != " + o2);
+        }
+    }
+
     private static Map<String,SheetIgnores> parseSheetIgnores(String[] args, String opt){
         int start = -1, end = -1;
         for (int i=0; i<args.length; i++){

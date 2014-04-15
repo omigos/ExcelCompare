@@ -17,7 +17,12 @@ public class CellPos implements Comparable<CellPos>{
     public String getSheetName(){
         return sheet.getName();
     }
-    
+
+    public ICell getCell()
+    {
+        return cell;
+    }
+
     public int getRow(){
         return ROW_INTERNAL_TO_USER(cell.getRowIndex());
     }
