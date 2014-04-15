@@ -169,19 +169,43 @@ public class SpreadSheetDiffer {
             verifyStyle(s1.getFillBackgroundColor(), s2.getFillBackgroundColor());
             verifyStyle(s1.getFillBackgroundColorColor(), s2.getFillBackgroundColorColor());
 
-            IFont f1 = ss1.getFont(c1.getCell().getCellStyle().getFontIndex());
-            IFont f2 = ss2.getFont(c2.getCell().getCellStyle().getFontIndex());
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ")");
+        }
 
-            verifyStyle(f1.getBoldweight(), f2.getBoldweight());
-            verifyStyle(f1.getColor(), f2.getColor());
-            verifyStyle(f1.getFontHeight(), f2.getFontHeight());
-            verifyStyle(f1.getFontName(), f2.getFontName());
+        IFont f1;
+        try {
+            f1 = ss1.getFont(c1.getCell().getCellStyle().getFontIndex());
         } catch (Exception e) {
-            throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition());
+            throw new IllegalStateException("failed to load font 1 #" + c1.getCell().getCellStyle().getFontIndex());
+        }
+
+        IFont f2;
+        try {
+            f2 = ss2.getFont(c2.getCell().getCellStyle().getFontIndex());
+        } catch (Exception e) {
+            throw new IllegalStateException("failed to load font 2 #" + c1.getCell().getCellStyle().getFontIndex());
+        }
+
+        try {
+            if (f1 != null && f2 != null) {
+                verifyStyle(f1.getBoldweight(), f2.getBoldweight());
+                verifyStyle(f1.getColor(), f2.getColor());
+                verifyStyle(f1.getFontHeight(), f2.getFontHeight());
+                verifyStyle(f1.getFontName(), f2.getFontName());
+            }
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ")");
         }
     }
 
     private static void verifyStyle(Object o1, Object o2) {
+        if (o1 == null && o2 == null)
+            return;
+
+        if (o1 == null || o2 == null) {
+            throw new IllegalStateException("Styles do not match: " + o1 + " != " + o2);
+        }
         if (!o1.equals(o2)) {
             throw new IllegalStateException("Styles do not match: " + o1 + " != " + o2);
         }
