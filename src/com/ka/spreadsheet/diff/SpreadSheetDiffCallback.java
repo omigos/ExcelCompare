@@ -9,4 +9,6 @@ public interface SpreadSheetDiffCallback {
     void reportExtraCell(boolean inFirstSpreadSheet, CellPos c);
     
     void reportWorkbooksDiffer(boolean differ, File file1, File file2);
+
+    void reportStyleDiff(String diff, CellPos c1, CellPos c2);
 }

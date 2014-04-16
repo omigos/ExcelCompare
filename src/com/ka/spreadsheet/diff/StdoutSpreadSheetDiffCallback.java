@@ -26,7 +26,15 @@ public class StdoutSpreadSheetDiffCallback implements SpreadSheetDiffCallback {
         System.out.println("-----------------------------------------");
         System.out.println("Excel files " + file1 + " and " + file2 + " " + (differ ? "differ" : "match"));
     }
-    
+
+    @Override
+    public void reportStyleDiff(String diff, CellPos c1, CellPos c2) {
+        sheets.add(c1.getSheetName());
+        rows.add(c1.getRow());
+        cols.add(c1.getColumn());
+        System.out.println("STYLE DIFF " + diff);
+    }
+
     @Override
     public void reportExtraCell(boolean inFirstSpreadSheet, CellPos c) {
         if (inFirstSpreadSheet){

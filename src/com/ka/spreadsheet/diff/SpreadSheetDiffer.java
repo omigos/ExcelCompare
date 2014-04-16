@@ -101,7 +101,12 @@ public class SpreadSheetDiffer {
                         isDiff = true;
                         diffCallback.reportDiffCell(c1, c2);
                     } else {
-                        styleCompare(c1, c2, ss1, ss2);
+                        try {
+                            styleCompare(c1, c2, ss1, ss2);
+                        } catch (Exception e) {
+                            isDiff = true;
+                            diffCallback.reportStyleDiff(e.getMessage(), c1, c2);
+                        }
                     }
                     c1 = c2 = null;
                 }
@@ -173,6 +178,9 @@ public class SpreadSheetDiffer {
             throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ")");
         }
 
+        if (c1.getStringValue().trim().equals("") && c2.getStringValue().trim().equals(""))
+            return;
+
         IFont f1;
         try {
             f1 = ss1.getFont(c1.getCell().getCellStyle().getFontIndex());
@@ -195,7 +203,7 @@ public class SpreadSheetDiffer {
                 verifyStyle(f1.getFontName(), f2.getFontName(), "fontName");
             }
         } catch (IllegalStateException e) {
-            throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ")");
+            throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ") for content '" + c1.getStringValue() + "'");
         }
     }
 
