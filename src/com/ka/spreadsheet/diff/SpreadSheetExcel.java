@@ -5,10 +5,7 @@ import java.util.Iterator;
 import javax.annotation.Nullable;
 
 import org.apache.poi.POIXMLDocumentPart;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class SpreadSheetExcel implements ISpreadSheet {
@@ -17,6 +14,10 @@ public class SpreadSheetExcel implements ISpreadSheet {
 
   public SpreadSheetExcel(Workbook workbook) {
     this.workbook = workbook;
+  }
+
+  public IFont getFont(short index) {
+    return new FontExcel(workbook.getFontAt(index));
   }
 
   @Override
@@ -143,7 +144,6 @@ class RowExcel implements IRow {
   }
 }
 
-
 class CellExcel implements ICell {
 
   private Cell cell;
@@ -188,5 +188,295 @@ class CellExcel implements ICell {
         break;
     }
     return new CellValue(hasFormula, formula, value);
+  }
+
+  @Override
+   public ICellStyle getCellStyle() {
+    return new CellStyleExcel(cell.getCellStyle());
+  }
+}
+
+class CellStyleMock implements ICellStyle {
+
+  @Override
+  public int getAlignment() {
+    return 0;
+  }
+
+  @Override
+  public short getBorderBottom() {
+    return 0;
+  }
+
+  @Override
+  public short getBorderLeft() {
+    return 0;
+  }
+
+  @Override
+  public short getBorderRight() {
+    return 0;
+  }
+
+  @Override
+  public short getBorderTop() {
+    return 0;
+  }
+
+  @Override
+  public short getBottomBorderColor() {
+    return 0;
+  }
+
+  @Override
+  public short getLeftBorderColor() {
+    return 0;
+  }
+
+  @Override
+  public short getTopBorderColor() {
+    return 0;
+  }
+
+  @Override
+  public short getRightBorderColor() {
+    return 0;
+  }
+
+  @Override
+  public String getDataFormatString() {
+    return null;
+  }
+
+  @Override
+  public short getFillBackgroundColor() {
+    return 0;
+  }
+
+  @Override
+  public Color getFillBackgroundColorColor() {
+    return null;
+  }
+
+  @Override
+  public short getFillForegroundColor() {
+    return 0;
+  }
+
+  @Override
+  public Color getFillForegroundColorColor() {
+    return null;
+  }
+
+  @Override
+  public short getFillPattern() {
+    return 0;
+  }
+
+  @Override
+  public boolean getHidden() {
+    return false;
+  }
+
+  @Override
+  public short getIndention() {
+    return 0;
+  }
+
+  @Override
+  public short getVerticalAlignment() {
+    return 0;
+  }
+
+  @Override
+  public boolean getWrapText() {
+    return false;
+  }
+
+  @Override
+  public short getRotation() {
+    return 0;
+  }
+
+  @Override
+  public boolean getLocked() {
+    return false;
+  }
+
+  @Override
+  public short getFontIndex() {
+    return 0;
+  }
+}
+
+class CellStyleExcel implements ICellStyle {
+  private CellStyle cellStyle;
+
+  public CellStyleExcel(CellStyle cellStyle) {
+    this.cellStyle = cellStyle;
+  }
+
+  @Override
+  public int getAlignment() {
+    return cellStyle.getAlignment();
+  }
+
+  @Override
+  public short getBorderBottom() {
+    return cellStyle.getBorderBottom();
+  }
+
+  @Override
+  public short getBorderLeft() {
+
+    return cellStyle.getBorderLeft();
+  }
+
+  @Override
+  public short getBorderRight() {
+    return cellStyle.getBorderRight();
+  }
+
+  @Override
+  public short getBorderTop() {
+    return cellStyle.getBorderTop();
+  }
+
+  @Override
+  public short getBottomBorderColor() {
+    return cellStyle.getBottomBorderColor();
+  }
+
+  @Override
+  public short getLeftBorderColor() {
+    return cellStyle.getLeftBorderColor();
+  }
+
+  @Override
+  public short getTopBorderColor() {
+    return cellStyle.getTopBorderColor();
+  }
+
+  @Override
+  public short getRightBorderColor() {
+    return cellStyle.getRightBorderColor();
+  }
+
+  @Override
+  public String getDataFormatString() {
+    return cellStyle.getDataFormatString();
+  }
+
+  @Override
+  public short getFillBackgroundColor() {
+    return cellStyle.getFillBackgroundColor();
+  }
+
+  @Override
+  public Color getFillBackgroundColorColor() {
+    return cellStyle.getFillBackgroundColorColor();
+  }
+
+  @Override
+  public short getFillForegroundColor() {
+    return cellStyle.getFillForegroundColor();
+  }
+
+  @Override
+  public Color getFillForegroundColorColor() {
+    return cellStyle.getFillForegroundColorColor();
+  }
+
+  @Override
+  public short getFillPattern() {
+    return cellStyle.getFillPattern();
+  }
+
+  @Override
+  public boolean getHidden() {
+    return cellStyle.getHidden();
+  }
+
+  @Override
+  public short getIndention() {
+    return cellStyle.getIndention();
+  }
+
+  @Override
+  public short getVerticalAlignment() {
+    return cellStyle.getVerticalAlignment();
+  }
+
+  @Override
+  public boolean getWrapText() {
+    return cellStyle.getWrapText();
+  }
+
+  @Override
+  public short getRotation() {
+    return cellStyle.getRotation();
+  }
+
+  @Override
+  public boolean getLocked() {
+    return cellStyle.getLocked();
+  }
+
+  public short getFontIndex() {
+    return cellStyle.getFontIndex();
+  }
+}
+
+class FontMock implements IFont {
+
+  public FontMock() {
+  }
+
+  @Override
+  public short getBoldweight() {
+    return 0;
+  }
+
+  @Override
+  public short getColor() {
+    return 0;
+  }
+
+  @Override
+  public short getFontHeight() {
+    return 0;
+  }
+
+  @Override
+  public String getFontName() {
+    return "";
+  }
+}
+
+class FontExcel implements IFont {
+  private Font font;
+
+  public FontExcel(Font font) {
+    this.font = font;
+  }
+
+  @Override
+  public short getBoldweight() {
+    return font.getBoldweight();
+  }
+
+  @Override
+  public short getColor() {
+    return font.getColor();
+  }
+
+  @Override
+  public short getFontHeight() {
+    return font.getFontHeight();
+  }
+
+  @Override
+  public String getFontName() {
+    return font.getFontName();
   }
 }

@@ -61,6 +61,13 @@ public class SpreadSheetDiffer {
           if (!c1.getCellValue().compare(c2.getCellValue())) {
             isDiff = true;
             diffCallback.reportDiffCell(c1, c2);
+          } else {
+            try {
+              styleCompare(c1, c2, ss1, ss2);
+            } catch (Exception e) {
+              isDiff = true;
+              diffCallback.reportStyleDiff(e.getMessage(), c1, c2);
+            }
           }
           c1 = c2 = null;
         } else if (c < 0) {
@@ -175,6 +182,11 @@ public class SpreadSheetDiffer {
           }
         };
       }
+
+      @Override
+      public IFont getFont(short index) {
+        return null;
+      }
     };
   }
 
@@ -190,4 +202,77 @@ public class SpreadSheetDiffer {
       }
     };
   }
+
+  private static void styleCompare(CellPos c1, CellPos c2, ISpreadSheet ss1, ISpreadSheet ss2) {
+    ICellStyle s1 = c1.getCell().getCellStyle();
+    ICellStyle s2 = c2.getCell().getCellStyle();
+
+    try {
+      verifyStyle(s1.getLocked(), s2.getLocked(), "locked");
+      verifyStyle(s1.getAlignment(), s2.getAlignment(), "alignment");
+      verifyStyle(s1.getBorderBottom(), s2.getBorderBottom(), "borderBottom");
+      verifyStyle(s1.getBorderLeft(), s2.getBorderLeft(), "borderLeft");
+      verifyStyle(s1.getBorderRight(), s2.getBorderRight(), "borderRight");
+      verifyStyle(s1.getBorderTop(), s2.getBorderTop(), "borderTop");
+      verifyStyle(s1.getWrapText(), s2.getWrapText(), "wrapText");
+      verifyStyle(s1.getVerticalAlignment(), s2.getVerticalAlignment(), "verticalAlignment");
+      verifyStyle(s1.getTopBorderColor(), s2.getTopBorderColor(), "topBorderColor");
+      verifyStyle(s1.getRotation(), s2.getRotation(), "rotation");
+      verifyStyle(s1.getRightBorderColor(), s2.getRightBorderColor(), "rightBorderColor");
+      verifyStyle(s1.getLeftBorderColor(), s2.getLeftBorderColor(), "leftBorderColor");
+      verifyStyle(s1.getIndention(), s2.getIndention(), "indention");
+      verifyStyle(s1.getHidden(), s2.getHidden(), "hidden");
+      verifyStyle(s1.getFillPattern(), s2.getFillPattern(), "fillPattern");
+      verifyStyle(s1.getFillForegroundColorColor(), s2.getFillForegroundColorColor(), "fillForegroundColorColor");
+      verifyStyle(s1.getFillForegroundColor(), s2.getFillForegroundColor(), "fillForegroundColor");
+      verifyStyle(s1.getDataFormatString(), s2.getDataFormatString(), "dataFormatString");
+      verifyStyle(s1.getBottomBorderColor(), s2.getBottomBorderColor(), "bottomBordercolor");
+      verifyStyle(s1.getFillBackgroundColor(), s2.getFillBackgroundColor(), "fillBackgroundColor");
+      verifyStyle(s1.getFillBackgroundColorColor(), s2.getFillBackgroundColorColor(), "fillBackgroundColorColor");
+
+    } catch (IllegalStateException e) {
+      throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ")");
+    }
+
+    if (c1.getCellValue().toString().trim().equals("") && c2.getCellValue().toString().trim().equals(""))
+      return;
+
+    IFont f1;
+    try {
+      f1 = ss1.getFont(c1.getCell().getCellStyle().getFontIndex());
+    } catch (Exception e) {
+      throw new IllegalStateException("failed to load font 1 #" + c1.getCell().getCellStyle().getFontIndex());
+    }
+
+    IFont f2;
+    try {
+      f2 = ss2.getFont(c2.getCell().getCellStyle().getFontIndex());
+    } catch (Exception e) {
+      throw new IllegalStateException("failed to load font 2 #" + c1.getCell().getCellStyle().getFontIndex());
+    }
+
+    try {
+      if (f1 != null && f2 != null) {
+        verifyStyle(f1.getBoldweight(), f2.getBoldweight(), "bold");
+        verifyStyle(f1.getColor(), f2.getColor(), "color");
+        verifyStyle(f1.getFontHeight(), f2.getFontHeight(), "fontHeight");
+        verifyStyle(f1.getFontName(), f2.getFontName(), "fontName");
+      }
+    } catch (IllegalStateException e) {
+      throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ") for content '" + c1.getCellValue().toString() + "'");
+    }
+  }
+
+  private static void verifyStyle(Object o1, Object o2, String description) {
+    if (o1 == null && o2 == null)
+      return;
+
+    if (o1 == null || o2 == null) {
+      throw new IllegalStateException(description + " do not match: " + o1 + " != " + o2);
+    }
+    if (!o1.equals(o2)) {
+      throw new IllegalStateException(description + " do not match: " + o1 + " != " + o2);
+    }
+  }
+
 }

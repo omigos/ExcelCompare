@@ -33,6 +33,14 @@ public class StdoutSpreadSheetDiffCallback implements SpreadSheetDiffCallback {
   }
 
   @Override
+  public void reportStyleDiff(String diff, CellPos c1, CellPos c2) {
+    sheets.add(c1.getSheetName());
+    rows.add(c1.getRow());
+    cols.add(c1.getColumn());
+    System.out.println("STYLE DIFF " + diff);
+  }
+
+  @Override
   public void reportMacroOnlyIn(boolean inFirstSpreadSheet) {
     String name = "unknown";
     (inFirstSpreadSheet ? macros1 : macros2).add(name);

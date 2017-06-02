@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Cell;
 import org.odftoolkit.simple.table.Row;
@@ -41,6 +43,11 @@ public class SpreadSheetOdf implements ISpreadSheet {
         throw new UnsupportedOperationException();
       }
     };
+  }
+
+  @Override
+  public IFont getFont(short index) {
+    return new FontMock();
   }
 
   @Override
@@ -173,5 +180,10 @@ class CellOdf implements ICell {
       value = cell.getStringValue();
     }
     return new CellValue(hasFormula, formula, value);
+  }
+
+  @Override
+  public ICellStyle getCellStyle() {
+    return new CellStyleMock();
   }
 }

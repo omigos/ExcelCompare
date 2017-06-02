@@ -43,6 +43,10 @@ public class CellPos {
     }
   }
 
+  public ICell getCell() {
+    return cell;
+  }
+
   /**
    * Compare positions in {Sheet, Row, Column} order.
    */

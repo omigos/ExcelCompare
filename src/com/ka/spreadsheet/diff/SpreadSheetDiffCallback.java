@@ -11,4 +11,6 @@ public interface SpreadSheetDiffCallback {
   void reportMacroOnlyIn(boolean inFirstSpreadSheet);
 
   void reportWorkbooksDiffer(boolean differ, File file1, File file2);
+
+  void reportStyleDiff(String diff, CellPos c1, CellPos c2);
 }
