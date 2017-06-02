@@ -28,7 +28,7 @@ public class StdoutSpreadSheetDiffCallback implements SpreadSheetDiffCallback {
     reportSummary("EXTRA WB1", sheets1, rows1, cols1, macros1);
     reportSummary("EXTRA WB2", sheets2, rows2, cols2, macros2);
     System.out.println("-----------------------------------------");
-    System.out.println("Excel files " + file1 + " and " + file2 + " "
+    System.out.println("Excel files " + file1.toString().replace("\\", "/") + " and " + file2.toString().replace("\\", "/") + " "
         + (differ ? "differ" : "match"));
   }
 

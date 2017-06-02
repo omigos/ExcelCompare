@@ -115,15 +115,15 @@ public class SpreadSheetDiffer {
       return true;
     }
     if (!file.exists()) {
-      System.err.println("File: " + file + " does not exist.");
+      System.err.println("File: " + file.toString().replace("\\", "/") + " does not exist.");
       return false;
     }
     if (!file.canRead()) {
-      System.err.println("File: " + file + " not readable.");
+      System.err.println("File: " + file.toString().replace("\\", "/") + " not readable.");
       return false;
     }
     if (!file.isFile()) {
-      System.err.println("File: " + file + " is not a file.");
+      System.err.println("File: " + file.toString().replace("\\", "/") + " is not a file.");
       return false;
     }
     return true;
@@ -146,9 +146,9 @@ public class SpreadSheetDiffer {
       odfReadException = e;
     }
     if (file.getName().matches(".*\\.ods.*")) {
-      throw new RuntimeException("Failed to read as ods file: " + file, odfReadException);
+      throw new RuntimeException("Failed to read as ods file: " + file.toString().replace("\\", "/"), odfReadException);
     } else {
-      throw new RuntimeException("Failed to read as excel file: " + file, excelReadException);
+      throw new RuntimeException("Failed to read as excel file: " + file.toString().replace("\\", "/"), excelReadException);
     }
   }
 

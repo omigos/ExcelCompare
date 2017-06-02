@@ -1,9 +1,11 @@
 package com.ka.spreadsheet.diff;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nullable;
+//import javax.annotation.Nullable;
 
 public class WorkbookIgnores {
   private Map<String, SheetIgnores> ignores;
@@ -12,7 +14,8 @@ public class WorkbookIgnores {
     this.ignores = ignores;
   }
 
-  public @Nullable SheetIgnores fetchSheetIgnores(String sheetName) {
+  public @javax.annotation.Nullable
+  SheetIgnores fetchSheetIgnores(String sheetName) {
     SheetIgnores ignoredByName = ignores.get(sheetName);
     SheetIgnores ignoredAll = ignores.get("");
     return ignoredByName != null ? ignoredByName : ((ignoredAll != null) ? ignoredAll : null);
