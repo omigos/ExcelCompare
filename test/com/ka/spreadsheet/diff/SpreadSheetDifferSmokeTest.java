@@ -16,6 +16,11 @@ public class SpreadSheetDifferSmokeTest {
 
   public static void main(String[] args) throws Exception {
     testDiff(
+        "Different style",
+        new String[] {"test/resources/style1.xlsx", "test/resources/style2.xlsx"},
+        resultFile("test/resources/style.out"),
+        resultFile("test/resources/style.err"));
+    testDiff(
         "Identical xlsx files",
         new String[] {"test/resources/ss1.xlsx", "test/resources/ss1.xlsx"},
         resultFile("test/resources/ss1_xlsx_ss1_xlsx.out"),
