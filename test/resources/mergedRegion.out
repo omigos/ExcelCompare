@@ -1,0 +1,17 @@
+STYLE DIFF Styles of Cell Sheet1!A2 does not match Sheet1!A2 (alignment do not match: 0 != 2)
+EXTRA Cell in WB2 Sheet1!B2 => ''
+DIFF MergedRegion.getNumMergedRegions do not match: 1 != 2
+----------------- DIFF -------------------
+Sheets: [Sheet1]
+Rows: [2]
+Cols: [A]
+----------------- EXTRA WB1 -------------------
+Sheets: []
+Rows: []
+Cols: []
+----------------- EXTRA WB2 -------------------
+Sheets: [Sheet1]
+Rows: [2]
+Cols: [B]
+-----------------------------------------
+Excel files test/resources/mergedRegion1.xlsx and test/resources/mergedRegion2.xlsx differ

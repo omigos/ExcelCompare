@@ -1,0 +1,15 @@
+DIFF RowGroup.OutlineLevel for row 0 do not match: 1 != 0
+----------------- DIFF -------------------
+Sheets: [Sheet1]
+Rows: []
+Cols: []
+----------------- EXTRA WB1 -------------------
+Sheets: []
+Rows: []
+Cols: []
+----------------- EXTRA WB2 -------------------
+Sheets: []
+Rows: []
+Cols: []
+-----------------------------------------
+Excel files test/resources/rowGroup1.xlsx and test/resources/rowGroup2.xlsx differ

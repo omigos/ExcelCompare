@@ -1,0 +1,15 @@
+DIFF sheetName do not match: Sheet1 != andererName
+----------------- DIFF -------------------
+Sheets: [Sheet1]
+Rows: []
+Cols: []
+----------------- EXTRA WB1 -------------------
+Sheets: []
+Rows: []
+Cols: []
+----------------- EXTRA WB2 -------------------
+Sheets: []
+Rows: []
+Cols: []
+-----------------------------------------
+Excel files test/resources/sheetName1.xlsx and test/resources/sheetName2.xlsx differ

@@ -12,6 +12,10 @@ public class SpreadSheetExcel implements ISpreadSheet {
 
   private Workbook workbook;
 
+  public Workbook getWorkbook() {
+    return workbook;
+  }
+
   public SpreadSheetExcel(Workbook workbook) {
     this.workbook = workbook;
   }

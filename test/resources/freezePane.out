@@ -1,0 +1,15 @@
+DIFF FreezePane do not match: null != not null
+----------------- DIFF -------------------
+Sheets: [Sheet1]
+Rows: []
+Cols: []
+----------------- EXTRA WB1 -------------------
+Sheets: []
+Rows: []
+Cols: []
+----------------- EXTRA WB2 -------------------
+Sheets: []
+Rows: []
+Cols: []
+-----------------------------------------
+Excel files test/resources/freezePane1.xlsx and test/resources/freezePane2.xlsx differ

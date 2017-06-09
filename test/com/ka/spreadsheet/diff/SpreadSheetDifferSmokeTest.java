@@ -16,6 +16,31 @@ public class SpreadSheetDifferSmokeTest {
 
   public static void main(String[] args) throws Exception {
     testDiff(
+        "Different column widths",
+        new String[] {"test/resources/colWidth1.xlsx", "test/resources/colWidth2.xlsx"},
+        resultFile("test/resources/colWidth.out"),
+        resultFile("test/resources/colWidth.err"));
+    testDiff(
+        "Different row groups",
+        new String[] {"test/resources/rowGroup1.xlsx", "test/resources/rowGroup2.xlsx"},
+        resultFile("test/resources/rowGroup.out"),
+        resultFile("test/resources/rowGroup.err"));
+    testDiff(
+        "Different freeze panes",
+        new String[] {"test/resources/freezePane1.xlsx", "test/resources/freezePane2.xlsx"},
+        resultFile("test/resources/freezePane.out"),
+        resultFile("test/resources/freezePane.err"));
+    testDiff(
+        "Different merged regions",
+        new String[] {"test/resources/mergedRegion1.xlsx", "test/resources/mergedRegion2.xlsx"},
+        resultFile("test/resources/mergedRegion.out"),
+        resultFile("test/resources/mergedRegion.err"));
+    testDiff(
+        "Different sheet name",
+        new String[] {"test/resources/sheetName1.xlsx", "test/resources/sheetName2.xlsx"},
+        resultFile("test/resources/sheetName.out"),
+        resultFile("test/resources/sheetName.err"));
+    testDiff(
         "Different style",
         new String[] {"test/resources/style1.xlsx", "test/resources/style2.xlsx"},
         resultFile("test/resources/style.out"),

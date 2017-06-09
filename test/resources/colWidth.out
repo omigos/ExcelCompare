@@ -1,0 +1,15 @@
+DIFF ColumnWidth for column 0 do not match: 7241 != 2048
+----------------- DIFF -------------------
+Sheets: [Sheet1]
+Rows: []
+Cols: []
+----------------- EXTRA WB1 -------------------
+Sheets: []
+Rows: []
+Cols: []
+----------------- EXTRA WB2 -------------------
+Sheets: []
+Rows: []
+Cols: []
+-----------------------------------------
+Excel files test/resources/colWidth1.xlsx and test/resources/colWidth2.xlsx differ

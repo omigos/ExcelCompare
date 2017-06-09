@@ -1,5 +1,7 @@
 package com.ka.spreadsheet.diff;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+
 import java.io.File;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -38,6 +40,12 @@ public class StdoutSpreadSheetDiffCallback implements SpreadSheetDiffCallback {
     rows.add(c1.getRow());
     cols.add(c1.getColumn());
     System.out.println("STYLE DIFF " + diff);
+  }
+
+  @Override
+  public void reportSimpleDiff(String diff, XSSFSheet xs1, XSSFSheet xs2) {
+    sheets.add(xs1.getSheetName());
+    System.out.println("DIFF " + diff);
   }
 
   @Override
