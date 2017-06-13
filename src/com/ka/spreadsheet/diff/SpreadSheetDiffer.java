@@ -391,19 +391,6 @@ public class SpreadSheetDiffer {
     } catch (IllegalStateException e) {
       throw new IllegalStateException("Styles of Cell " + c1.getCellPosition() + " does not match " + c2.getCellPosition() + " (" + e.getMessage() + ") for content '" + c1.getCellValue().toString() + "'");
     }
-
-    ICell cell1 = c1.getCell();
-    ICell cell2 = c2.getCell();
-    if (cell1 != null && cell2 != null) {
-      ICellStyle cs1 = cell1.getCellStyle();
-      ICellStyle cs2 = cell2.getCellStyle();
-      if (cs1 != null && cs2 != null) {
-        verifyStyle(cs1.getBorderBottom(), cs2.getBorderBottom(), "borderBottom");
-        verifyStyle(cs1.getBorderLeft(), cs2.getBorderLeft(), "borderLeft");
-        verifyStyle(cs1.getBorderRight(), cs2.getBorderRight(), "borderRight");
-        verifyStyle(cs1.getBorderTop(), cs2.getBorderTop(), "borderTop");
-      }
-    }
   }
 
   private static void verifyStyle(Object o1, Object o2, String description) {
