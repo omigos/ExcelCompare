@@ -1,0 +1,18 @@
+STYLE DIFF Styles of Cell Sheet1!A1 does not match Sheet1!A1 (borderBottom do not match: 1 != 0)
+STYLE DIFF Styles of Cell Sheet1!B1 does not match Sheet1!B1 (borderTop do not match: 1 != 0)
+STYLE DIFF Styles of Cell Sheet1!C1 does not match Sheet1!C1 (borderLeft do not match: 1 != 0)
+STYLE DIFF Styles of Cell Sheet1!D1 does not match Sheet1!D1 (borderRight do not match: 1 != 0)
+----------------- DIFF -------------------
+Sheets: [Sheet1]
+Rows: [1]
+Cols: [A, B, C, D]
+----------------- EXTRA WB1 -------------------
+Sheets: []
+Rows: []
+Cols: []
+----------------- EXTRA WB2 -------------------
+Sheets: []
+Rows: []
+Cols: []
+-----------------------------------------
+Excel files test/resources/borders1.xlsx and test/resources/borders2.xlsx differ

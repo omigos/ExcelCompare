@@ -16,6 +16,11 @@ public class SpreadSheetDifferSmokeTest {
 
   public static void main(String[] args) throws Exception {
     testDiff(
+        "Different borders",
+        new String[] {"test/resources/borders1.xlsx", "test/resources/borders2.xlsx"},
+        resultFile("test/resources/borders.out"),
+        resultFile("test/resources/borders.err"));
+    testDiff(
         "Different column widths",
         new String[] {"test/resources/colWidth1.xlsx", "test/resources/colWidth2.xlsx"},
         resultFile("test/resources/colWidth.out"),
